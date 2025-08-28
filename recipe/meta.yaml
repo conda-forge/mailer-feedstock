@@ -11,20 +11,22 @@ source:
 
 build:
   noarch: python
-  number: 1004
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv "
+  number: 1
+  script: "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
   host:
     - pip
     # Force to use a Python version compatible with setuptools below.
-    - python =3.10.*
+    - python =3.11.*
     # setuptools >=58.0 does not support use_2to3, which is used by mailer's setup.py.
     - setuptools <58.0
   run:
-    - python
+    - python >={{ python-min }}
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - mailer
 
